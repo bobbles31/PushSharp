@@ -57,6 +57,7 @@
     <Compile Include="C2dm\C2dmFluentNotification.cs" />
     <Compile Include="C2dm\C2dmNotification.cs" />
     <Compile Include="C2dm\C2dmPushChannel.cs" />
+    <Compile Include="C2dm\C2dmPushChannelFactory.cs" />
     <Compile Include="C2dm\C2dmPushChannelSettings.cs" />
     <Compile Include="C2dm\C2dmPushService.cs" />
     <Compile Include="C2dm\C2dmMessageTransportAsync.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="C2dm\C2dmExceptions.cs" />
     <Compile Include="Gcm\GcmFluentNotification.cs" />
     <Compile Include="Gcm\GcmPushChannel.cs" />
+    <Compile Include="Gcm\GcmPushChannelFactory.cs" />
     <Compile Include="Gcm\GcmPushChannelSettings.cs" />
     <Compile Include="Gcm\GcmPushService.cs" />
     <Compile Include="Gcm\GcmExceptions.cs" />

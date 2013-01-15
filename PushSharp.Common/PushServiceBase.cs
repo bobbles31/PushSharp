@@ -5,9 +5,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public abstract class PushServiceBase<TChannelSettings> : IDisposable, ChannelFactory
-        where TChannelSettings : PushChannelSettings
+    public abstract class PushServiceBase : IDisposable
     {
+        private readonly ChannelFactory channelFactory;
+
         private readonly ConcurrentQueue<Notification> queuedNotifications = new ConcurrentQueue<Notification>();
 
         private readonly CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
@@ -20,12 +21,12 @@
 
         private bool stopping;
 
-        public PushServiceBase(TChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
+        public PushServiceBase(ChannelFactory channelFactory, PushServiceSettings serviceSettings = null)
         {
+            this.channelFactory = channelFactory;
             this.Events = new ChannelEvents();
             this.ServiceSettings = serviceSettings ?? new PushServiceSettings();
-            this.ChannelSettings = channelSettings;
-
+            
             this.queuedNotifications = new ConcurrentQueue<Notification>();
 
             ChannelScaler.Start();
@@ -36,8 +37,6 @@
         public abstract PlatformType Platform { get; }
 
         public PushServiceSettings ServiceSettings { get; private set; }
-
-        public TChannelSettings ChannelSettings { get; private set; }
 
         public ChannelEvents Events { get; set; }
 
@@ -54,7 +53,7 @@
             get
             {
                 return this.channelLoadBalancer
-                       ?? (this.channelLoadBalancer = new QueueLengthLoadBalancer(this, this.Events, this.Platform));
+                       ?? (this.channelLoadBalancer = new QueueLengthLoadBalancer(this.channelFactory, this.Events, this.Platform));
             }
 
             set
@@ -76,8 +75,6 @@
                 this.channelScaler = value;
             }
         }
-
-        protected abstract PushChannelBase CreateChannel(PushChannelSettings channelSettings);
 
         private void BeginSending()
         {
@@ -143,10 +140,9 @@
             ChannelScaler.RecordQueueTime(queueTimeMilliseconds);
         }
 
-
         public PushChannel Create()
         {
-            var newChannel = this.CreateChannel(this.ChannelSettings);
+            var newChannel = this.channelFactory.Create();
             newChannel.Events.RegisterProxyHandler(this.Events);
             newChannel.OnQueueTimed += this.newChannelOnQueueTimed;
             return newChannel;

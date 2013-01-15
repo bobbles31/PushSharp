@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PushSharp.Common;
-
-namespace PushSharp.WindowsPhone
+﻿namespace PushSharp.WindowsPhone
 {
-	public class WindowsPhonePushService : PushServiceBase<WindowsPhonePushChannelSettings>
-	{
-		public WindowsPhonePushService(WindowsPhonePushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
-			: base(channelSettings, serviceSettings)
-		{
-		}
+    using PushSharp.Common;
 
-		protected override PushChannelBase CreateChannel(PushChannelSettings channelSettings)
-		{
-			return new WindowsPhonePushChannel(channelSettings as WindowsPhonePushChannelSettings);
-		}
+    public class WindowsPhonePushService : PushServiceBase
+    {
+        public WindowsPhonePushService(
+            WindowsPhonePushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
+            : base(new WindowsPhoneChannelFactory(channelSettings), serviceSettings)
+        {
+        }
 
-		public override PlatformType Platform
-		{
-			get { return PlatformType.WindowsPhone; }
-		}
-	}
+        public override PlatformType Platform
+        {
+            get
+            {
+                return PlatformType.WindowsPhone;
+            }
+        }
+    }
 }

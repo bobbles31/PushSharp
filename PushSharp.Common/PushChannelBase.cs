@@ -7,6 +7,8 @@ namespace PushSharp.Common
 {
     public interface PushChannel : IDisposable
     {
+        event Action<double> OnQueueTimed;
+
         PushChannelSettings ChannelSettings { get; }
 
         PushServiceSettings ServiceSettings { get; }
@@ -29,7 +31,7 @@ namespace PushSharp.Common
         public PushChannelSettings ChannelSettings { get; private set; }
 		public PushServiceSettings ServiceSettings { get; private set; }
 
-		internal event Action<double> OnQueueTimed;
+		public event Action<double> OnQueueTimed;
 
 		object queuedNotificationsLock = new object();
 		ConcurrentQueue<Notification> queuedNotifications;

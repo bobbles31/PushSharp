@@ -55,6 +55,7 @@
     <Compile Include="..\PushSharp.Common\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="ApplePushChannelFactory.cs" />
     <Compile Include="ApplePushChannelSettings.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="ApplePushChannel.cs" />

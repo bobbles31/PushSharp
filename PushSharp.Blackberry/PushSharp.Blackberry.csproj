@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="BlackberryNotification.cs" />
     <Compile Include="BlackberryPushChannel.cs" />
+    <Compile Include="BlackberryPushChannelFactory.cs" />
     <Compile Include="BlackberryPushChannelSettings.cs" />
     <Compile Include="BlackberryPushService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

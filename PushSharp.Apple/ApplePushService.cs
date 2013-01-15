@@ -1,55 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using PushSharp.Common;
-
-namespace PushSharp.Apple
+﻿namespace PushSharp.Apple
 {
-	public class ApplePushService : Common.PushServiceBase<ApplePushChannelSettings>, IDisposable
-	{
-		FeedbackService feedbackService;
-		CancellationTokenSource cancelTokenSource;
-		Timer timerFeedback;
+    using System;
+    using System.Threading;
 
-		public ApplePushService(ApplePushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
-			: base(channelSettings, serviceSettings)
-		{
-			var appleChannelSettings = channelSettings as ApplePushChannelSettings;
-			cancelTokenSource = new CancellationTokenSource();
-			feedbackService = new FeedbackService();
-			feedbackService.OnFeedbackReceived += new FeedbackService.FeedbackReceivedDelegate(feedbackService_OnFeedbackReceived);
+    using PushSharp.Common;
 
-			//allow control over feedback call interval, if set to zero, don't make feedback calls automatically
-			if (appleChannelSettings.FeedbackIntervalMinutes > 0)
-			{
-				timerFeedback = new Timer(new TimerCallback((state) =>
-				{
-					try { feedbackService.Run(channelSettings as ApplePushChannelSettings, this.cancelTokenSource.Token); }
-					catch (Exception ex) { this.Events.RaiseChannelException(ex, PlatformType.Apple); }
+    public class ApplePushService : PushServiceBase
+    {
+        private readonly FeedbackService feedbackService;
 
-					//Timer will run first after 10 seconds, then every 10 minutes to get feedback!
-				}), null, TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(appleChannelSettings.FeedbackIntervalMinutes));
+        private readonly CancellationTokenSource cancelTokenSource;
 
-			}
-		}
+        private Timer timerFeedback;
 
-		void feedbackService_OnFeedbackReceived(string deviceToken, DateTime timestamp)
-		{
-			this.Events.RaiseDeviceSubscriptionExpired(PlatformType.Apple, deviceToken);
-		}
+        public ApplePushService(ApplePushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
+            : base(new ApplePushChannelFactory(channelSettings), serviceSettings)
+        {
+            var appleChannelSettings = channelSettings;
+            cancelTokenSource = new CancellationTokenSource();
+            feedbackService = new FeedbackService();
+            feedbackService.OnFeedbackReceived +=
+                this.feedbackService_OnFeedbackReceived;
 
-		protected override Common.PushChannelBase CreateChannel(Common.PushChannelSettings channelSettings)
-		{
-			return new ApplePushChannel(channelSettings as ApplePushChannelSettings);
-		}
+            // allow control over feedback call interval, if set to zero, don't make feedback calls automatically
+            if (appleChannelSettings.FeedbackIntervalMinutes > 0)
+            {
+                timerFeedback = new Timer(
+                    state =>
+                        {
+                            try
+                            {
+                                this.feedbackService.Run(
+                                    channelSettings, this.cancelTokenSource.Token);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.Events.RaiseChannelException(ex, PlatformType.Apple);
+                            }
 
-		public override PlatformType Platform
-		{
-			get { return PlatformType.Apple; }
-		}
-	}
+                            // Timer will run first after 10 seconds, then every 10 minutes to get feedback!
+                        },
+                    null,
+                    TimeSpan.FromSeconds(10),
+                    TimeSpan.FromMinutes(appleChannelSettings.FeedbackIntervalMinutes));
+
+            }
+        }
+
+        private void feedbackService_OnFeedbackReceived(string deviceToken, DateTime timestamp)
+        {
+            this.Events.RaiseDeviceSubscriptionExpired(PlatformType.Apple, deviceToken);
+        }
+
+        public override PlatformType Platform
+        {
+            get
+            {
+                return PlatformType.Apple;
+            }
+        }
+    }
 }

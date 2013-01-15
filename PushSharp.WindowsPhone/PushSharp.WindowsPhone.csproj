@@ -49,6 +49,7 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="Exceptions.cs" />
+    <Compile Include="WindowsPhoneChannelFactory.cs" />
     <Compile Include="WindowsPhoneMessageStatus.cs" />
     <Compile Include="WindowsPhonePushChannelSettings.cs" />
     <Compile Include="WindowsPhoneNotification.cs" />
