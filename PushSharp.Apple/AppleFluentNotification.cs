@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using PushSharp.Apple;
-using PushSharp.Common;
-
-namespace PushSharp
+﻿namespace PushSharp.Apple
 {
-	public static class FluentNotification
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public static class FluentNotification
 	{
 		public static AppleNotification ForDeviceToken(this AppleNotification n, string deviceToken)
 		{
-			n.DeviceToken = deviceToken;
+		    n.DeviceToken = new DeviceToken(deviceToken);
 			return n;
 		}
 
@@ -24,9 +21,11 @@ namespace PushSharp
 		public static AppleNotification WithAlert(this AppleNotification n, string alert)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
-			n.Payload.Alert = new AppleNotificationAlert() { Body = alert };
+			n.Payload.Alert = new AppleNotificationAlert { Body = alert };
 						
 			return n;
 		}
@@ -34,7 +33,9 @@ namespace PushSharp
 		public static AppleNotification WithAlert(this AppleNotification n, AppleNotificationAlert alert)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
 			n.Payload.Alert = alert;
 			
@@ -44,9 +45,11 @@ namespace PushSharp
 		public static AppleNotification WithAlert(this AppleNotification n, string body, string localizedKey, string actionLocalizedKey, IEnumerable<object> localizedArgs)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
-			n.Payload.Alert = new AppleNotificationAlert() { Body = body, LocalizedKey = localizedKey, ActionLocalizedKey = actionLocalizedKey, LocalizedArgs = localizedArgs.ToList() };
+			n.Payload.Alert = new AppleNotificationAlert { Body = body, LocalizedKey = localizedKey, ActionLocalizedKey = actionLocalizedKey, LocalizedArgs = localizedArgs.ToList() };
 
 			return n;
 		}
@@ -54,7 +57,9 @@ namespace PushSharp
 		public static AppleNotification WithBadge(this AppleNotification n, int badge)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 			
 			n.Payload.Badge = badge;
 
@@ -64,7 +69,9 @@ namespace PushSharp
 		public static AppleNotification WithSound(this AppleNotification n, string sound)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
 			n.Payload.Sound = sound;
 			
@@ -74,7 +81,9 @@ namespace PushSharp
 		public static AppleNotification WithContentAvailable(this AppleNotification n, int contentAvailableCount)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
 			n.Payload.ContentAvailable = contentAvailableCount;
 
@@ -91,7 +100,9 @@ namespace PushSharp
 		public static AppleNotification WithCustomItem(this AppleNotification n, string key, params object[] values)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
 			n.Payload.AddCustom(key, values);
 
@@ -118,12 +129,13 @@ namespace PushSharp
 		public static AppleNotification HideActionButton(this AppleNotification n)
 		{
 			if (n.Payload == null)
-				n.Payload = new AppleNotificationPayload();
+			{
+			    n.Payload = new AppleNotificationPayload();
+			}
 
 			n.Payload.HideActionButton = true;
 
 			return n;
 		}
-
 	}
 }

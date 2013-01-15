@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PushSharp.Common;
-
-namespace PushSharp
+﻿namespace PushSharp
 {
-	public class PushService : IDisposable
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using PushSharp.Common;
+
+    public class PushService : IDisposable
 	{
 		public ChannelEvents Events;
 

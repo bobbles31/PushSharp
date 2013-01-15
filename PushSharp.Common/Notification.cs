@@ -1,8 +1,8 @@
-﻿using System;
-
-namespace PushSharp.Common
+﻿namespace PushSharp.Common
 {
-	public abstract class Notification
+    using System;
+
+    public abstract class Notification
 	{
 		public PlatformType Platform { get; set; }
 
