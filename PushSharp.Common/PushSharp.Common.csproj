@@ -53,6 +53,7 @@
     <Compile Include="ChannelScaler.cs" />
     <Compile Include="ChannelScalerImpl.cs" />
     <Compile Include="Exceptions.cs" />
+    <Compile Include="PushChannel.cs" />
     <Compile Include="PushChannelBase.cs" />
     <Compile Include="PushChannelSettings.cs" />
     <Compile Include="Notification.cs" />

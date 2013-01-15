@@ -1,55 +1,22 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace PushSharp.Common
+﻿namespace PushSharp.Common
 {
-    public interface PushChannel : IDisposable
-    {
-        event Action<double> OnQueueTimed;
-
-        PushChannelSettings ChannelSettings { get; }
-
-        PushServiceSettings ServiceSettings { get; }
-
-        PlatformType PlatformType { get; }
-
-        int QueuedNotificationCount { get; }
-
-        ChannelEvents Events { get; }
-
-        void Stop(bool waitForQueueToDrain);
-
-        void QueueNotification(Notification notification, bool countsAsRequeue = true);
-    }
+    using System;
+    using System.Collections.Concurrent;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     public abstract class PushChannelBase : PushChannel
     {
-        public ChannelEvents Events { get; private set; }
+        private readonly ConcurrentQueue<Notification> queuedNotifications;
 
-        public PushChannelSettings ChannelSettings { get; private set; }
-		public PushServiceSettings ServiceSettings { get; private set; }
+        private readonly ManualResetEventSlim waitQueuedNotification;
 
-		public event Action<double> OnQueueTimed;
+        public event Action<double> OnQueueTimed;
 
-		object queuedNotificationsLock = new object();
-		ConcurrentQueue<Notification> queuedNotifications;
-		ManualResetEventSlim waitQueuedNotification;
-
-		protected bool stopping;
-		protected Task taskSender;
-		protected CancellationTokenSource CancelTokenSource;
-		protected CancellationToken CancelToken;
-
-		protected abstract void SendNotification(Notification notification);
-
-        public abstract PlatformType PlatformType { get; }
-
-		public PushChannelBase(PushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
+        public PushChannelBase(PushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
 		{
             this.Events = new ChannelEvents();
-			this.stopping = false;
+			this.Stopping = false;
 			this.CancelTokenSource = new CancellationTokenSource();
 			this.CancelToken = CancelTokenSource.Token;
 
@@ -59,15 +26,33 @@ namespace PushSharp.Common
 			this.ServiceSettings = serviceSettings ?? new PushServiceSettings();
 			this.waitQueuedNotification = new ManualResetEventSlim();
 
-			//Start our sending task
-			taskSender = new Task(() => Sender(), TaskCreationOptions.LongRunning);
-			taskSender.ContinueWith((t) => { var ex = t.Exception; }, TaskContinuationOptions.OnlyOnFaulted);
-			taskSender.Start();
+			// Start our sending task
+			TaskSender = new Task(this.Sender, TaskCreationOptions.LongRunning);
+			TaskSender.ContinueWith((t) => { var ex = t.Exception; }, TaskContinuationOptions.OnlyOnFaulted);
+			TaskSender.Start();
 		}
+
+        protected bool Stopping { get; set; }
+
+        protected Task TaskSender { get; set; }
+
+        protected CancellationTokenSource CancelTokenSource { get; set; }
+
+        protected CancellationToken CancelToken { get; set; }
+
+        public ChannelEvents Events { get; private set; }
+
+        public PushChannelSettings ChannelSettings { get; private set; }
+		
+        public PushServiceSettings ServiceSettings { get; private set; }
+        
+		protected abstract void SendNotification(Notification notification);
+
+        public abstract PlatformType PlatformType { get; }
 
 		public virtual void Stop(bool waitForQueueToDrain)
 		{
-			stopping = true;
+			Stopping = true;
 
 			if (waitQueuedNotification != null)
 				waitQueuedNotification.Set();
@@ -86,13 +71,13 @@ namespace PushSharp.Common
 				CancelTokenSource.Cancel();
 
 			//Wait on our tasks for a maximum of 30 seconds
-			Task.WaitAll(new Task[] { taskSender }, 30000);
+			Task.WaitAll(new Task[] { TaskSender }, 30000);
 		}
 
 		public virtual void Dispose()
 		{
 			//Stop without waiting
-			if (!stopping)
+			if (!Stopping)
 				Stop(false);
 		}
 

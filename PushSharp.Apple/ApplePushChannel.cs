@@ -130,7 +130,7 @@ namespace PushSharp.Apple
 
 		public override void Stop(bool waitForQueueToDrain)
 		{
-			stopping = true;
+			Stopping = true;
 
 			//See if we want to wait for the queue to drain before stopping
 			if (waitForQueueToDrain)
@@ -147,7 +147,7 @@ namespace PushSharp.Apple
 				CancelTokenSource.Cancel();
 
 			//Wait on our tasks for a maximum of 30 seconds
-			Task.WaitAll(new Task[] { base.taskSender, taskCleanup }, 30000);
+			Task.WaitAll(new Task[] { base.TaskSender, taskCleanup }, 30000);
 		}
 		
 		void Reader()

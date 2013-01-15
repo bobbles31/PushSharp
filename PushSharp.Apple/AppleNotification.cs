@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.ServiceModel.Web;
-
-namespace PushSharp.Apple
+﻿namespace PushSharp.Apple
 {
-	public class AppleNotification : Common.Notification
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Text;
+
+    public class AppleNotification : Common.Notification
 	{
 		static object nextIdentifierLock = new object();
 		static int nextIdentifier = 1;
