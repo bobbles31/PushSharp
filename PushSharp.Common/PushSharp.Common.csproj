@@ -47,6 +47,11 @@
   <ItemGroup>
     <Compile Include="AssemblyVersionInfo.cs" />
     <Compile Include="ChannelEvents.cs" />
+    <Compile Include="ChannelFactory.cs" />
+    <Compile Include="ChannelLoadBalancer.cs" />
+    <Compile Include="ChannelScaleAction.cs" />
+    <Compile Include="ChannelScaler.cs" />
+    <Compile Include="ChannelScalerImpl.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="PushChannelBase.cs" />
     <Compile Include="PushChannelSettings.cs" />
@@ -56,6 +61,7 @@
     <Compile Include="PushServiceBase.cs" />
     <Compile Include="PushServiceSettings.cs" />
     <Compile Include="PushSettings.cs" />
+    <Compile Include="QueueLengthLoadBalancer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PushSharp-Signing.snk" />

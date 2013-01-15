@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushSharp", "PushSharp\PushSharp.csproj", "{09414728-3728-4105-A149-EC2E315355F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushSharp.Common", "PushSharp.Common\PushSharp.Common.csproj", "{836F225F-6CD9-48DE-910C-70F8A7CF54AA}"
@@ -23,10 +23,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushSharp.Windows", "PushSh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FC4739B-A355-4F92-A62F-1A1813EC52F2}"
 	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
 		PushSharp-Signing.snk = PushSharp-Signing.snk
+		PushSharp.vsmdi = PushSharp.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB0869F4-8227-4C5D-B982-62159B0E8796}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushSharp.Common.UnitTests", "PushSharp.Common.UnitTests\PushSharp.Common.UnitTests.csproj", "{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}"
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = PushSharp.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -116,6 +131,16 @@ Global
 		{0EC3A31E-B869-4465-ABDC-90C2E3CCC17D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0EC3A31E-B869-4465-ABDC-90C2E3CCC17D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0EC3A31E-B869-4465-ABDC-90C2E3CCC17D}.Release|x86.ActiveCfg = Release|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

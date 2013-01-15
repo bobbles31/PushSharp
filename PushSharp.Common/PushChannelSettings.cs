@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PushSharp.Common
+﻿namespace PushSharp.Common
 {
-	public abstract class PushChannelSettings
+	public interface PushChannelSettings
 	{
 	}
 }

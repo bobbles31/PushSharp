@@ -1,22 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System.Security.Cryptography.X509Certificates;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net.Security;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net;
 
 namespace PushSharp.Common
 {
-	public abstract class PushChannelBase : IDisposable
-	{
-		public ChannelEvents Events = new ChannelEvents();
-		
-		public PushChannelSettings ChannelSettings { get; private set; }
+    public interface PushChannel : IDisposable
+    {
+        PushChannelSettings ChannelSettings { get; }
+
+        PushServiceSettings ServiceSettings { get; }
+
+        PlatformType PlatformType { get; }
+
+        int QueuedNotificationCount { get; }
+
+        ChannelEvents Events { get; }
+
+        void Stop(bool waitForQueueToDrain);
+
+        void QueueNotification(Notification notification, bool countsAsRequeue = true);
+    }
+
+    public abstract class PushChannelBase : PushChannel
+    {
+        public ChannelEvents Events { get; private set; }
+
+        public PushChannelSettings ChannelSettings { get; private set; }
 		public PushServiceSettings ServiceSettings { get; private set; }
 
 		internal event Action<double> OnQueueTimed;
@@ -36,6 +46,7 @@ namespace PushSharp.Common
 
 		public PushChannelBase(PushChannelSettings channelSettings, PushServiceSettings serviceSettings = null)
 		{
+            this.Events = new ChannelEvents();
 			this.stopping = false;
 			this.CancelTokenSource = new CancellationTokenSource();
 			this.CancelToken = CancelTokenSource.Token;
