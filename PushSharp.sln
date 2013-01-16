@@ -35,6 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB0869
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushSharp.Common.UnitTests", "PushSharp.Common.UnitTests\PushSharp.Common.UnitTests.csproj", "{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushSharp.Apple.UnitTests", "PushSharp.Apple.UnitTests\PushSharp.Apple.UnitTests.csproj", "{C1CDE0D8-122E-489F-A412-704485096039}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,16 @@ Global
 		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}.Release|x86.ActiveCfg = Release|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C1CDE0D8-122E-489F-A412-704485096039}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +157,7 @@ Global
 		{5250980B-BD11-4201-B083-AEDB8C62C471} = {C09BBA3E-9CF3-4479-A4C3-3006820E2046}
 		{71E27C37-FBBF-481B-934B-1F7DBDE3C5D6} = {C09BBA3E-9CF3-4479-A4C3-3006820E2046}
 		{0EC3A31E-B869-4465-ABDC-90C2E3CCC17D} = {C09BBA3E-9CF3-4479-A4C3-3006820E2046}
+		{C1CDE0D8-122E-489F-A412-704485096039} = {C09BBA3E-9CF3-4479-A4C3-3006820E2046}
 		{1B9A3A8B-3690-4435-BF9C-B557BF2713DB} = {04A9AE38-795E-4CB5-A9AD-C1FA83DC342C}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution

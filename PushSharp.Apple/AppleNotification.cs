@@ -3,12 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Net;
-    using System.Text;
 
     public class AppleNotification : Common.Notification
     {
-        private const int MAX_PAYLOAD_SIZE = 256;
-
         public static readonly DateTime DoNotStore = DateTime.MinValue;
 
         private static readonly object NextIdentifierLock = new object();
@@ -95,33 +92,9 @@
 
             byte[] expiry = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(expiryTimeStamp));
 
-            byte[] payload = Encoding.UTF8.GetBytes(Payload.ToJson());
+            byte[] payload = Payload.AsByteArray();
 
-            if (payload.Length > MAX_PAYLOAD_SIZE)
-            {
-                int newSize = Payload.Alert.Body.Length - (payload.Length - MAX_PAYLOAD_SIZE);
-                if (newSize > 0)
-                {
-                    Payload.Alert.Body = Payload.Alert.Body.Substring(0, newSize);
-                    payload = Encoding.UTF8.GetBytes(Payload.ToString());
-                }
-                else
-                {
-                    do
-                    {
-                        Payload.Alert.Body = Payload.Alert.Body.Remove(Payload.Alert.Body.Length - 1);
-                        payload = Encoding.UTF8.GetBytes(Payload.ToString());
-                    }
-                    while (payload.Length > MAX_PAYLOAD_SIZE && !string.IsNullOrEmpty(Payload.Alert.Body));
-                }
-
-                if (payload.Length > MAX_PAYLOAD_SIZE)
-                {
-                    throw new NotificationFailureException(7, this);
-                }
-            }
-
-            byte[] payloadSize = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Convert.ToInt16(payload.Length)));
+            byte[] payloadSize = Payload.SizeInBytes();
 
             var notificationParts = new List<byte[]>();
 

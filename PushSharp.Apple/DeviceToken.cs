@@ -33,7 +33,7 @@
         {
             get
             {
-                return BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Convert.ToInt16(deviceToken.Length)));
+                return BitConverter.GetBytes(IPAddress.HostToNetworkOrder(Convert.ToInt16(DEVICE_TOKEN_BINARY_SIZE)));
             }
         }
 
@@ -58,21 +58,17 @@
             get
             {
                 var tokenBytes = new byte[this.deviceToken.Length / 2];
-                for (int i = 0; i < this.deviceToken.Length; i++)
+
+                for (int i = 0; i < this.deviceToken.Length / 2; i++)
                 {
                     try
                     {
                         tokenBytes[i] = byte.Parse(this.deviceToken.Substring(i * 2, 2), System.Globalization.NumberStyles.HexNumber);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         throw new DeviceTokenStringToByteArrayParseException();
                     }
-                }
-
-                if (this.deviceToken.Length != DEVICE_TOKEN_BINARY_SIZE)
-                {
-                    throw new InvalidDeviceTokenBinarySizeException();
                 }
 
                 return tokenBytes;

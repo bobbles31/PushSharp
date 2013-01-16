@@ -117,7 +117,7 @@
         {
             while (!this.cancelTokenSource.IsCancellationRequested)
             {
-                if (ChannelLoadBalancer.HasActiveChannels)
+                if (!ChannelLoadBalancer.HasActiveChannels)
                 {
                     Thread.Sleep(250);
                     continue;

@@ -32,17 +32,17 @@
 			TaskSender.Start();
 		}
 
-        protected bool Stopping { get; set; }
+    protected bool Stopping { get; set; }
 
-        protected Task TaskSender { get; set; }
+    protected Task TaskSender { get; set; }
 
-        protected CancellationTokenSource CancelTokenSource { get; set; }
+    protected CancellationTokenSource CancelTokenSource { get; set; }
 
-        protected CancellationToken CancelToken { get; set; }
+    protected CancellationToken CancelToken { get; set; }
 
-        public ChannelEvents Events { get; private set; }
+    public ChannelEvents Events { get; private set; }
 
-        public PushChannelSettings ChannelSettings { get; private set; }
+    public PushChannelSettings ChannelSettings { get; private set; }
 		
         public PushServiceSettings ServiceSettings { get; private set; }
         

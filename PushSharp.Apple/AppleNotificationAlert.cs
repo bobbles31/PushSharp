@@ -6,78 +6,75 @@ using System.Text;
 
 namespace PushSharp.Apple
 {
-	/// <summary>
-	/// Alert Portion of the Notification Payload
-	/// </summary>
-	public class AppleNotificationAlert
-	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public AppleNotificationAlert()
-		{
-			Body = null;
-			ActionLocalizedKey = null;
-			LocalizedKey = null;
-			LocalizedArgs = new List<object>();
-		}
+    /// <summary>
+    /// Alert Portion of the Notification Payload
+    /// </summary>
+    public class AppleNotificationAlert
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public AppleNotificationAlert()
+        {
+            Body = null;
+            ActionLocalizedKey = null;
+            LocalizedKey = null;
+            LocalizedArgs = new List<object>();
+        }
 
-		/// <summary>
-		/// Body Text of the Notification's Alert
-		/// </summary>
-		public string Body
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Body Text of the Notification's Alert
+        /// </summary>
+        public string Body { get; set; }
 
-		/// <summary>
-		/// Action Button's Localized Key
-		/// </summary>
-		public string ActionLocalizedKey
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Action Button's Localized Key
+        /// </summary>
+        public string ActionLocalizedKey { get; set; }
 
-		/// <summary>
-		/// Localized Key
-		/// </summary>
-		public string LocalizedKey
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Localized Key
+        /// </summary>
+        public string LocalizedKey { get; set; }
 
-		/// <summary>
-		/// Localized Argument List
-		/// </summary>
-		public List<object> LocalizedArgs
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Localized Argument List
+        /// </summary>
+        public List<object> LocalizedArgs { get; set; }
 
-		public void AddLocalizedArgs(params object[] values)
-		{
-			this.LocalizedArgs.AddRange(values);
-		}
+        public void AddLocalizedArgs(params object[] values)
+        {
+            this.LocalizedArgs.AddRange(values);
+        }
 
-		/// <summary>
-		/// Determines if the Alert is empty and should be excluded from the Notification Payload
-		/// </summary>
-		public bool IsEmpty
-		{
-			get
-			{
-				if (!string.IsNullOrEmpty(Body)
-					|| !string.IsNullOrEmpty(ActionLocalizedKey)
-					|| !string.IsNullOrEmpty(LocalizedKey)
-					|| (LocalizedArgs != null && LocalizedArgs.Count > 0))
-					return false;
-				else
-					return true;
-			}
-		}
-	}
+        /// <summary>
+        /// Determines if the Alert is empty and should be excluded from the Notification Payload
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Body) || !string.IsNullOrEmpty(ActionLocalizedKey)
+                    || !string.IsNullOrEmpty(LocalizedKey) || (LocalizedArgs != null && LocalizedArgs.Count > 0)) return false;
+                else return true;
+            }
+        }
+
+        public bool IsLocalised
+        {
+            get
+            {
+                return !IsNotLocalized;
+            }
+        }
+
+        public bool IsNotLocalized
+        {
+            get
+            {
+                return string.IsNullOrEmpty(LocalizedKey) && string.IsNullOrEmpty(ActionLocalizedKey)
+                       && (LocalizedArgs == null || LocalizedArgs.Count <= 0);
+            }
+        }
+    }
 }

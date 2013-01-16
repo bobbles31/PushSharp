@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F38EF9CB-DDC5-45CC-8789-B0A2DAB5ABD0}</ProjectGuid>
+    <ProjectGuid>{C1CDE0D8-122E-489F-A412-704485096039}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PushSharp.Common.UnitTests</RootNamespace>
-    <AssemblyName>PushSharp.Common.UnitTests</AssemblyName>
+    <RootNamespace>PushSharp.Apple.UnitTests</RootNamespace>
+    <AssemblyName>PushSharp.Apple.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -33,11 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NSubstitute">
-      <HintPath>..\packages\NSubstitute.1.4.3.0\lib\NET40\NSubstitute.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,31 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChannelScalerImplTests\GivenALoadBalancerWithTooFewChannels.cs" />
-    <Compile Include="ChannelScalerImplTests\GivenALoadBalancerWithTooManyChannels.cs" />
-    <Compile Include="ChannelScalerImplTests\GivenAScalerThatIsRunningWell.cs" />
-    <Compile Include="ChannelScalerImplTests\GivenQueueTimesThatViolateTheRequiredMinimum.cs" />
-    <Compile Include="ChannelScalerImplTests\GivenMediumQueueTimes.cs" />
-    <Compile Include="ChannelScalerImplTests\GivenLongQueueTimes.cs" />
-    <Compile Include="PushServiceBaseTests.cs" />
-    <Compile Include="QueueLengthLoadBalancerTests\GivenAQueueBalancerWithTwoChannels.cs" />
-    <Compile Include="QueueLengthLoadBalancerTests\GivenAQueueBalancerWithChannels.cs" />
-    <Compile Include="QueueLengthLoadBalancerTests\GivenAQueueBalancerWithThreeChannels.cs" />
-    <Compile Include="QueueLengthLoadBalancerTests\GivenAQueueBalancerWithFiveChannels.cs" />
-    <Compile Include="QueueLengthLoadBalancerTests\GivenARequestForFiveChannels.cs" />
-    <Compile Include="TestablePushService.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PushSharp.Apple\PushSharp.Apple.csproj">
+      <Project>{83C67156-893D-4AFF-9169-DB34771989CB}</Project>
+      <Name>PushSharp.Apple</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PushSharp.Common\PushSharp.Common.csproj">
       <Project>{836F225F-6CD9-48DE-910C-70F8A7CF54AA}</Project>
       <Name>PushSharp.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

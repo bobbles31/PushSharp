@@ -55,6 +55,8 @@
     <Compile Include="..\PushSharp.Common\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="AbortedQueueContents.cs" />
+    <Compile Include="AppleNotificationToPayLoadConversionException.cs" />
     <Compile Include="ApplePushChannelFactory.cs" />
     <Compile Include="ApplePushChannelSettings.cs" />
     <Compile Include="DeviceToken.cs" />
@@ -68,8 +70,10 @@
     <Compile Include="AppleFluentNotification.cs" />
     <Compile Include="InvalidDeviceTokenBinarySizeException.cs" />
     <Compile Include="InvalidDeviceTokenException.cs" />
+    <Compile Include="PendingItemsQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApplePushService.cs" />
+    <Compile Include="SentNotification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

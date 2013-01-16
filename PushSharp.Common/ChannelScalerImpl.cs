@@ -99,7 +99,7 @@
 
             var avgTime = this.GetAverageQueueWait();
 
-            if (avgTime < this.ServiceSettings.MinAvgTimeToScaleChannels && this.ChannelLoadBalancer.ChannelCount > 1)
+            if (this.IsRunningQuicklyEnough() && this.BalancerHasAtLeastOneChannel())
             {
                 this.ScaleChannels(ChannelScaleAction.Destroy);
             }
@@ -120,8 +120,21 @@
                     numChannelsToSpinUp = 1;
                 }
 
-                this.ScaleChannels(ChannelScaleAction.Create, numChannelsToSpinUp);
+                if (numChannelsToSpinUp > 0)
+                {
+                    this.ScaleChannels(ChannelScaleAction.Create, numChannelsToSpinUp);
+                }
             }
+        }
+
+        private bool BalancerHasAtLeastOneChannel()
+        {
+            return this.ChannelLoadBalancer.ChannelCount > 1;
+        }
+
+        private bool IsRunningQuicklyEnough()
+        {
+            return this.GetAverageQueueWait() < this.ServiceSettings.MinAvgTimeToScaleChannels;
         }
 
         private void ScaleChannels(ChannelScaleAction action, int count = 1)
